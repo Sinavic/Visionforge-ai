@@ -2,63 +2,1103 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VisionForge AI</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#070b14;color:#f7f9ff}
-.app{min-height:100vh;background:radial-gradient(circle at 80% 0%,#263b7a33,transparent 35%),#070b14}
-header{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;border-bottom:1px solid #ffffff12;background:#0a0f1cdd;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
-.logo{font-weight:800;font-size:21px}.logo span{color:#6ee7ff}
-main{max-width:1150px;margin:auto;padding:45px 20px}.hero{text-align:center;margin-bottom:35px}.hero h1{font-size:clamp(34px,7vw,65px);margin:10px 0;background:linear-gradient(90deg,#fff,#76e4ff,#9d8cff);-webkit-background-clip:text;color:transparent}.hero p{color:#9ba7bd;max-width:650px;margin:auto;font-size:17px}
-.panel{background:#0d1423;border:1px solid #ffffff12;border-radius:22px;padding:22px;box-shadow:0 20px 60px #0008}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:20px}.tab{border:1px solid #ffffff14;background:#111a2b;color:#aeb9ce;padding:13px 8px;border-radius:12px;font-weight:700;cursor:pointer}.tab.active{background:#263b7a;color:white;border-color:#687dff}
-textarea{width:100%;min-height:150px;background:#080d18;color:#fff;border:1px solid #ffffff18;border-radius:14px;padding:16px;font-size:16px;resize:vertical;outline:none}textarea:focus{border-color:#7186ff}
-.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.field{background:#101827;padding:12px;border-radius:12px}.field label{display:block;color:#8996ad;font-size:12px;margin-bottom:7px}.field select,.field input{width:100%;background:#080d18;color:white;border:1px solid #ffffff14;border-radius:8px;padding:10px}
-.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(90deg,#5d70ff,#8a65ff);color:#fff}.secondary{background:#172235;color:#dce4f4}
-#upload{display:none}.drop{border:1px dashed #ffffff2b;border-radius:14px;padding:28px;text-align:center;color:#8e9bb1;margin-bottom:15px;cursor:pointer}
-.preview{margin-top:22px;min-height:180px;border:1px solid #ffffff10;border-radius:15px;background:#080d18;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#78859b}.preview img,.preview video{max-width:100%;max-height:430px;border-radius:12px}.status{margin-top:12px;color:#8794aa;font-size:14px}
-footer{text-align:center;padding:35px;color:#68758b;font-size:13px}
-@media(max-width:650px){.tabs{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr}.hero{margin-top:15px}.panel{padding:15px}}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:#070b14;
+  color:#fff;
+  min-height:100vh;
+}
+
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 20% 0%,#172554 0,transparent 35%),
+    radial-gradient(circle at 90% 10%,#30135f 0,transparent 35%),
+    #070b14;
+}
+
+/* HEADER */
+
+header{
+  height:72px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  background:rgba(7,11,20,.82);
+  backdrop-filter:blur(18px);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:21px;
+  font-weight:800;
+}
+
+.logoIcon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#7c3aed,#06b6d4);
+  box-shadow:0 0 25px rgba(124,58,237,.35);
+}
+
+.logoIcon span{
+  font-size:20px;
+}
+
+.headerRight{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.credit{
+  padding:8px 13px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);
+  border-radius:20px;
+  font-size:13px;
+  color:#cbd5e1;
+}
+
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#22d3ee,#8b5cf6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+
+/* MAIN */
+
+main{
+  width:min(1200px,94%);
+  margin:auto;
+  padding:42px 0 70px;
+}
+
+.hero{
+  text-align:center;
+  margin-bottom:35px;
+}
+
+.badge{
+  display:inline-block;
+  padding:7px 14px;
+  border-radius:30px;
+  background:rgba(124,58,237,.12);
+  border:1px solid rgba(124,58,237,.3);
+  color:#c4b5fd;
+  font-size:13px;
+  margin-bottom:15px;
+}
+
+.hero h1{
+  font-size:clamp(34px,6vw,62px);
+  line-height:1.05;
+  margin-bottom:14px;
+  letter-spacing:-2px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#a78bfa,#22d3ee);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  color:#94a3b8;
+  max-width:650px;
+  margin:auto;
+  line-height:1.6;
+}
+
+/* WORKSPACE */
+
+.workspace{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.panel{
+  background:rgba(13,20,35,.82);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.panelTitle{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:18px;
+}
+
+/* TABS */
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-bottom:20px;
+}
+
+.tab{
+  border:1px solid rgba(255,255,255,.08);
+  background:#0b1220;
+  color:#94a3b8;
+  padding:11px 7px;
+  border-radius:10px;
+  font-size:12px;
+  transition:.2s;
+}
+
+.tab:hover{
+  border-color:#7c3aed;
+}
+
+.tab.active{
+  color:#fff;
+  background:linear-gradient(135deg,#6d28d9,#2563eb);
+  border-color:transparent;
+}
+
+/* FORM */
+
+label{
+  display:block;
+  color:#cbd5e1;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+textarea{
+  width:100%;
+  min-height:145px;
+  resize:vertical;
+  background:#080e1a;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:13px;
+  padding:15px;
+  color:#fff;
+  outline:none;
+  line-height:1.5;
+}
+
+textarea:focus{
+  border-color:#7c3aed;
+  box-shadow:0 0 0 3px rgba(124,58,237,.1);
+}
+
+.upload{
+  border:1px dashed #334155;
+  border-radius:13px;
+  padding:20px;
+  text-align:center;
+  color:#94a3b8;
+  margin-top:12px;
+  display:none;
+}
+
+.upload.show{
+  display:block;
+}
+
+.upload input{
+  display:none;
+}
+
+.uploadLabel{
+  display:inline-block;
+  padding:9px 15px;
+  background:#111827;
+  border-radius:9px;
+  margin-top:10px;
+  color:#fff;
+  cursor:pointer;
+}
+
+.previewImage{
+  max-width:100%;
+  max-height:180px;
+  margin-top:12px;
+  border-radius:10px;
+  display:none;
+}
+
+/* CONTROLS */
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+  margin-top:17px;
+}
+
+select{
+  width:100%;
+  padding:11px;
+  border-radius:10px;
+  background:#080e1a;
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;
+  outline:none;
+}
+
+.generate{
+  width:100%;
+  border:none;
+  margin-top:18px;
+  padding:14px;
+  border-radius:12px;
+  color:#fff;
+  font-weight:800;
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  box-shadow:0 10px 30px rgba(99,102,241,.25);
+  transition:.2s;
+}
+
+.generate:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 35px rgba(99,102,241,.35);
+}
+
+.generate:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+/* OUTPUT */
+
+.output{
+  min-height:390px;
+  display:flex;
+  flex-direction:column;
+}
+
+.outputBox{
+  flex:1;
+  min-height:300px;
+  border-radius:15px;
+  background:
+    linear-gradient(135deg,rgba(124,58,237,.08),rgba(34,211,238,.05)),
+    #080e1a;
+  border:1px solid rgba(255,255,255,.07);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px;
+  overflow:hidden;
+}
+
+.empty{
+  color:#64748b;
+}
+
+.emptyIcon{
+  font-size:45px;
+  margin-bottom:12px;
+}
+
+.resultMedia{
+  max-width:100%;
+  max-height:330px;
+  border-radius:12px;
+  display:none;
+}
+
+.resultText{
+  display:none;
+  color:#cbd5e1;
+  line-height:1.6;
+}
+
+.actions{
+  display:none;
+  gap:10px;
+  margin-top:13px;
+}
+
+.actionBtn{
+  flex:1;
+  padding:11px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#111827;
+  color:#fff;
+}
+
+.actionBtn.primary{
+  background:#2563eb;
+  border:none;
+}
+
+/* PROGRESS */
+
+.progress{
+  display:none;
+  margin-top:15px;
+}
+
+.progressBar{
+  height:7px;
+  background:#111827;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progressFill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#7c3aed,#22d3ee);
+  transition:width .3s;
+}
+
+.progressText{
+  font-size:12px;
+  color:#94a3b8;
+  margin-top:7px;
+}
+
+/* FEATURES */
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+  margin-top:20px;
+}
+
+.feature{
+  padding:17px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(13,20,35,.65);
+}
+
+.featureIcon{
+  font-size:22px;
+  margin-bottom:9px;
+}
+
+.feature h3{
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+.feature p{
+  color:#64748b;
+  font-size:12px;
+  line-height:1.5;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#475569;
+  font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+  header{
+    padding:0 15px;
+  }
+
+  .credit{
+    display:none;
+  }
+
+  main{
+    width:94%;
+    padding-top:28px;
+  }
+
+  .workspace{
+    grid-template-columns:1fr;
+  }
+
+  .features{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .hero h1{
+    letter-spacing:-1px;
+  }
+}
+
+@media(max-width:480px){
+  .panel{
+    padding:16px;
+  }
+
+  .tabs{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .controls{
+    grid-template-columns:1fr;
+  }
+
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+  .logoIcon{
+    width:34px;
+    height:34px;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-<header><div class="logo">⚡ Vision<span>Forge</span> AI</div><div style="color:#8390a7;font-size:13px">Free Studio</div></header>
+
+<header>
+  <div class="logo">
+    <div class="logoIcon"><span>✦</span></div>
+    VisionForge AI
+  </div>
+
+  <div class="headerRight">
+    <div class="credit">Free Access</div>
+    <div class="avatar">V</div>
+  </div>
+</header>
+
 <main>
-<section class="hero"><div style="color:#6ee7ff;font-weight:700">CREATE WITHOUT LIMITS</div><h1>Turn Ideas Into Visuals</h1><p>Generate images and videos from your imagination. Start free, preview your work and download your creations.</p></section>
-<section class="panel">
-<div class="tabs">
-<button class="tab active" data-mode="text-image">Text → Image</button>
-<button class="tab" data-mode="text-video">Text → Video</button>
-<button class="tab" data-mode="image-video">Image → Video</button>
-<button class="tab" data-mode="image-image">Image → Image</button>
-</div>
-<div id="uploadBox" class="drop" style="display:none" onclick="document.getElementById('upload').click()">📁 Tap to choose an image<br><small>PNG, JPG or WEBP</small><input id="upload" type="file" accept="image/*"></div>
-<textarea id="prompt" placeholder="Describe what you want to create... Example: A cinematic African savannah at sunrise, ultra realistic, dramatic clouds, 4K"></textarea>
-<div class="controls">
-<div class="field"><label>ASPECT RATIO</label><select><option>16:9 Landscape</option><option>9:16 Portrait</option><option>1:1 Square</option></select></div>
-<div class="field"><label>QUALITY</label><select><option>High</option><option>Ultra</option><option>Standard</option></select></div>
-<div class="field"><label>DURATION</label><select><option>5 seconds</option><option>10 seconds</option><option>15 seconds</option></select></div>
-</div>
-<div class="actions"><button class="btn primary" id="generate">✨ Generate</button><button class="btn secondary" id="clear">Clear</button></div>
-<div class="status" id="status">Ready to create.</div>
-<div class="preview" id="preview">Your generated result will appear here.</div>
+
+<section class="hero">
+  <div class="badge">✦ AI CREATION STUDIO</div>
+
+  <h1>
+    Create <span class="gradient">Anything</span><br>
+    You Can Imagine
+  </h1>
+
+  <p>
+    Turn your ideas into stunning images and videos with VisionForge AI.
+    Write a prompt, upload an image, and bring your imagination to life.
+  </p>
 </section>
-</main>
-<footer>© 2026 VisionForge AI · Creative tools for everyone</footer>
+
+
+<section class="workspace">
+
+<!-- LEFT PANEL -->
+
+<div class="panel">
+
+<div class="panelTitle">Create with AI</div>
+
+<div class="tabs">
+
+<button class="tab active" data-mode="text-image">
+🖼️ Text → Image
+</button>
+
+<button class="tab" data-mode="text-video">
+🎬 Text → Video
+</button>
+
+<button class="tab" data-mode="image-image">
+🔄 Image → Image
+</button>
+
+<button class="tab" data-mode="image-video">
+🎥 Image → Video
+</button>
+
 </div>
+
+
+<label id="promptLabel">Describe your image</label>
+
+<textarea id="prompt"
+placeholder="Example: A majestic African lion standing on a rocky mountain at sunset, cinematic lighting, ultra realistic, 8K..."></textarea>
+
+
+<div class="upload" id="uploadArea">
+
+<div>📤 Upload an image to transform</div>
+
+<label class="uploadLabel">
+Choose Image
+<input type="file" id="imageInput" accept="image/*">
+</label>
+
+<img id="uploadedImage" class="previewImage">
+
+</div>
+
+
+<div class="controls">
+
+<div>
+<label>Aspect Ratio</label>
+
+<select id="ratio">
+<option>16:9 Landscape</option>
+<option>9:16 Portrait</option>
+<option>1:1 Square</option>
+<option>4:3 Classic</option>
+</select>
+</div>
+
+<div>
+<label>Quality</label>
+
+<select id="quality">
+<option>High</option>
+<option>Ultra</option>
+<option>Standard</option>
+</select>
+</div>
+
+</div>
+
+
+<div class="controls">
+
+<div>
+<label>Style</label>
+
+<select id="style">
+<option>Cinematic</option>
+<option>Photorealistic</option>
+<option>Anime</option>
+<option>3D Render</option>
+<option>Fantasy</option>
+<option>Documentary</option>
+</select>
+</div>
+
+<div>
+<label>Duration</label>
+
+<select id="duration">
+<option>5 seconds</option>
+<option>10 seconds</option>
+<option>15 seconds</option>
+</select>
+</div>
+
+</div>
+
+
+<div class="progress" id="progress">
+
+<div class="progressBar">
+<div class="progressFill" id="progressFill"></div>
+</div>
+
+<div class="progressText" id="progressText">
+Preparing generation...
+</div>
+
+</div>
+
+
+<button class="generate" id="generate">
+✨ Generate with VisionForge
+</button>
+
+</div>
+
+
+<!-- RIGHT PANEL -->
+
+<div class="panel output">
+
+<div class="panelTitle">Preview</div>
+
+<div class="outputBox" id="outputBox">
+
+<div class="empty" id="empty">
+
+<div class="emptyIcon">✦</div>
+
+<p>Your creation will appear here</p>
+
+<p style="font-size:12px;margin-top:7px">
+Enter a prompt and click Generate
+</p>
+
+</div>
+
+<img id="resultImage" class="resultMedia">
+
+<video id="resultVideo" class="resultMedia" controls></video>
+
+<div id="resultText" class="resultText"></div>
+
+</div>
+
+
+<div class="actions" id="actions">
+
+<button class="actionBtn primary" id="downloadBtn">
+⬇️ Download
+</button>
+
+<button class="actionBtn" id="newBtn">
+＋ New Creation
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="features">
+
+<div class="feature">
+<div class="featureIcon">⚡</div>
+<h3>Fast Creation</h3>
+<p>Generate creative content from simple text prompts.</p>
+</div>
+
+<div class="feature">
+<div class="featureIcon">🎨</div>
+<h3>Multiple Styles</h3>
+<p>Cinematic, realistic, fantasy, anime and more.</p>
+</div>
+
+<div class="feature">
+<div class="featureIcon">📱</div>
+<h3>Mobile Friendly</h3>
+<p>Create from your phone, tablet or computer.</p>
+</div>
+
+<div class="feature">
+<div class="featureIcon">⬇️</div>
+<h3>Free Downloads</h3>
+<p>Download your creations directly from the studio.</p>
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+VisionForge AI © 2026 — Create without limits.
+</footer>
+
+</div>
+
+
 <script>
-let mode='text-image', selectedImage=null;
-const tabs=document.querySelectorAll('.tab'), uploadBox=document.getElementById('uploadBox'), prompt=document.getElementById('prompt'), preview=document.getElementById('preview'), status=document.getElementById('status');
-tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');mode=t.dataset.mode;uploadBox.style.display=mode.startsWith('image-')?'block':'none';prompt.placeholder=mode==='text-image'?'Describe the image you want to create...':'Describe your video or transformation...';});
-document.getElementById('upload').onchange=e=>{selectedImage=e.target.files[0];if(selectedImage){preview.innerHTML='<b>Image selected:</b> '+selectedImage.name;status.textContent='Image ready.'}};
-document.getElementById('clear').onclick=()=>{prompt.value='';selectedImage=null;preview.textContent='Your generated result will appear here.';status.textContent='Ready to create.'};
-document.getElementById('generate').onclick=()=>{
- if(!prompt.value.trim() && !selectedImage){status.textContent='Please enter a prompt or choose an image.';return}
- status.textContent='Preparing your creation...';
- preview.innerHTML='<div><div style="font-size:42px">⚡</div><b>VisionForge Studio is ready.</b><br><span style="color:#8794aa">AI generation API will be connected in the next setup step.</span></div>';
- setTimeout(()=>status.textContent='Demo interface complete — connect your preferred AI provider to generate real media.',900);
-};
+
+let currentMode = "text-image";
+
+const tabs = document.querySelectorAll(".tab");
+const prompt = document.getElementById("prompt");
+const promptLabel = document.getElementById("promptLabel");
+const uploadArea = document.getElementById("uploadArea");
+const imageInput = document.getElementById("imageInput");
+const uploadedImage = document.getElementById("uploadedImage");
+const generate = document.getElementById("generate");
+
+const progress = document.getElementById("progress");
+const progressFill = document.getElementById("progressFill");
+const progressText = document.getElementById("progressText");
+
+const empty = document.getElementById("empty");
+const resultImage = document.getElementById("resultImage");
+const resultVideo = document.getElementById("resultVideo");
+const resultText = document.getElementById("resultText");
+const actions = document.getElementById("actions");
+const downloadBtn = document.getElementById("downloadBtn");
+const newBtn = document.getElementById("newBtn");
+
+let uploadedData = null;
+
+
+/* MODE SWITCHING */
+
+tabs.forEach(tab => {
+
+  tab.addEventListener("click", () => {
+
+    tabs.forEach(t => t.classList.remove("active"));
+
+    tab.classList.add("active");
+
+    currentMode = tab.dataset.mode;
+
+    if(currentMode === "text-image"){
+
+      promptLabel.textContent = "Describe your image";
+
+      prompt.placeholder =
+      "Example: A majestic African lion standing on a rocky mountain at sunset, cinematic lighting, ultra realistic, 8K...";
+
+      uploadArea.classList.remove("show");
+
+    }
+
+    if(currentMode === "text-video"){
+
+      promptLabel.textContent = "Describe your video";
+
+      prompt.placeholder =
+      "Example: A massive eagle flying over the African savannah at sunrise, cinematic camera movement, dramatic atmosphere...";
+
+      uploadArea.classList.remove("show");
+
+    }
+
+    if(currentMode === "image-image"){
+
+      promptLabel.textContent = "Describe how to transform the image";
+
+      prompt.placeholder =
+      "Example: Transform this image into a cinematic African royal portrait with dramatic lighting...";
+
+      uploadArea.classList.add("show");
+
+    }
+
+    if(currentMode === "image-video"){
+
+      promptLabel.textContent = "Describe the video movement";
+
+      prompt.placeholder =
+      "Example: Make the person slowly walk forward while the camera moves around them...";
+
+      uploadArea.classList.add("show");
+
+    }
+
+  });
+
+});
+
+
+/* IMAGE UPLOAD */
+
+imageInput.addEventListener("change", function(){
+
+  const file = this.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    uploadedData = e.target.result;
+
+    uploadedImage.src = uploadedData;
+
+    uploadedImage.style.display = "block";
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* GENERATION */
+
+generate.addEventListener("click", () => {
+
+  const text = prompt.value.trim();
+
+  if(!text){
+
+    alert("Please enter a prompt first.");
+
+    return;
+  }
+
+  if((currentMode === "image-image" ||
+      currentMode === "image-video") && !uploadedData){
+
+    alert("Please upload an image first.");
+
+    return;
+  }
+
+  generate.disabled = true;
+
+  progress.style.display = "block";
+
+  progressFill.style.width = "0%";
+
+  empty.style.display = "none";
+
+  resultImage.style.display = "none";
+
+  resultVideo.style.display = "none";
+
+  resultText.style.display = "none";
+
+  actions.style.display = "none";
+
+
+  let percent = 0;
+
+  const timer = setInterval(() => {
+
+    percent += 10;
+
+    progressFill.style.width = percent + "%";
+
+    if(percent < 40){
+
+      progressText.textContent = "Analyzing your prompt...";
+
+    }else if(percent < 70){
+
+      progressText.textContent = "Creating your masterpiece...";
+
+    }else{
+
+      progressText.textContent = "Finishing generation...";
+
+    }
+
+    if(percent >= 100){
+
+      clearInterval(timer);
+
+      finishGeneration(text);
+
+    }
+
+  },180);
+
+});
+
+
+/* DEMO GENERATION RESULT */
+
+function finishGeneration(text){
+
+  progressText.textContent = "Generation complete!";
+
+  generate.disabled = false;
+
+  setTimeout(() => {
+
+    progress.style.display = "none";
+
+    actions.style.display = "flex";
+
+    if(currentMode === "text-video" ||
+       currentMode === "image-video"){
+
+      /*
+       Demo video mode.
+       Replace this section later with a real AI video API.
+      */
+
+      resultText.innerHTML =
+      "🎬 <strong>Video generation ready</strong><br><br>" +
+      "Your prompt:<br>" +
+      escapeHTML(text) +
+      "<br><br>" +
+      "<small>Connect an AI video API to generate the actual video.</small>";
+
+      resultText.style.display = "block";
+
+    }else{
+
+      /*
+       Demo image mode.
+       Creates a visual placeholder using SVG.
+      */
+
+      const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="1024"
+           height="576"
+           viewBox="0 0 1024 576">
+
+        <defs>
+          <linearGradient id="g"
+             x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#312e81"/>
+            <stop offset="50%" stop-color="#581c87"/>
+            <stop offset="100%" stop-color="#0e7490"/>
+          </linearGradient>
+        </defs>
+
+        <rect width="1024"
+              height="576"
+              fill="url(#g)"/>
+
+        <circle cx="800"
+                cy="130"
+                r="85"
+                fill="#f8fafc"
+                opacity=".8"/>
+
+        <text x="512"
+              y="260"
+              text-anchor="middle"
+              fill="white"
+              font-size="38"
+              font-family="Arial"
+              font-weight="bold">
+          VISIONFORGE AI
+        </text>
+
+        <text x="512"
+              y="315"
+              text-anchor="middle"
+              fill="#dbeafe"
+              font-size="20"
+              font-family="Arial">
+          AI Creation Preview
+        </text>
+
+        <text x="512"
+              y="365"
+              text-anchor="middle"
+              fill="#e2e8f0"
+              font-size="15"
+              font-family="Arial">
+          ${escapeHTML(text.substring(0,80))}
+        </text>
+
+      </svg>
+      `;
+
+      const blob =
+      new Blob([svg], {type:"image/svg+xml"});
+
+      const url =
+      URL.createObjectURL(blob);
+
+      resultImage.src = url;
+
+      resultImage.style.display = "block";
+
+      resultImage.dataset.url = url;
+
+    }
+
+  },500);
+
+}
+
+
+/* DOWNLOAD */
+
+downloadBtn.addEventListener("click", () => {
+
+  if(resultImage.style.display === "block"){
+
+    const a = document.createElement("a");
+
+    a.href = resultImage.dataset.url;
+
+    a.download = "visionforge-ai-creation.svg";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+  }else{
+
+    alert(
+      "Your download will be available here when the AI generation API is connected."
+    );
+
+  }
+
+});
+
+
+/* NEW CREATION */
+
+newBtn.addEventListener("click", () => {
+
+  prompt.value = "";
+
+  resultImage.style.display = "none";
+
+  resultVideo.style.display = "none";
+
+  resultText.style.display = "none";
+
+  actions.style.display = "none";
+
+  empty.style.display = "block";
+
+  uploadedData = null;
+
+  uploadedImage.src = "";
+
+  uploadedImage.style.display = "none";
+
+});
+
+
+/* SECURITY */
+
+function escapeHTML(text){
+
+  return text
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
 </script>
+
 </body>
 </html>
