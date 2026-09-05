@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VisionForge AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#070b14;color:#f7f9ff}
+.app{min-height:100vh;background:radial-gradient(circle at 80% 0%,#263b7a33,transparent 35%),#070b14}
+header{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;border-bottom:1px solid #ffffff12;background:#0a0f1cdd;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.logo{font-weight:800;font-size:21px}.logo span{color:#6ee7ff}
+main{max-width:1150px;margin:auto;padding:45px 20px}.hero{text-align:center;margin-bottom:35px}.hero h1{font-size:clamp(34px,7vw,65px);margin:10px 0;background:linear-gradient(90deg,#fff,#76e4ff,#9d8cff);-webkit-background-clip:text;color:transparent}.hero p{color:#9ba7bd;max-width:650px;margin:auto;font-size:17px}
+.panel{background:#0d1423;border:1px solid #ffffff12;border-radius:22px;padding:22px;box-shadow:0 20px 60px #0008}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:20px}.tab{border:1px solid #ffffff14;background:#111a2b;color:#aeb9ce;padding:13px 8px;border-radius:12px;font-weight:700;cursor:pointer}.tab.active{background:#263b7a;color:white;border-color:#687dff}
+textarea{width:100%;min-height:150px;background:#080d18;color:#fff;border:1px solid #ffffff18;border-radius:14px;padding:16px;font-size:16px;resize:vertical;outline:none}textarea:focus{border-color:#7186ff}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.field{background:#101827;padding:12px;border-radius:12px}.field label{display:block;color:#8996ad;font-size:12px;margin-bottom:7px}.field select,.field input{width:100%;background:#080d18;color:white;border:1px solid #ffffff14;border-radius:8px;padding:10px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(90deg,#5d70ff,#8a65ff);color:#fff}.secondary{background:#172235;color:#dce4f4}
+#upload{display:none}.drop{border:1px dashed #ffffff2b;border-radius:14px;padding:28px;text-align:center;color:#8e9bb1;margin-bottom:15px;cursor:pointer}
+.preview{margin-top:22px;min-height:180px;border:1px solid #ffffff10;border-radius:15px;background:#080d18;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#78859b}.preview img,.preview video{max-width:100%;max-height:430px;border-radius:12px}.status{margin-top:12px;color:#8794aa;font-size:14px}
+footer{text-align:center;padding:35px;color:#68758b;font-size:13px}
+@media(max-width:650px){.tabs{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr}.hero{margin-top:15px}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">⚡ Vision<span>Forge</span> AI</div><div style="color:#8390a7;font-size:13px">Free Studio</div></header>
+<main>
+<section class="hero"><div style="color:#6ee7ff;font-weight:700">CREATE WITHOUT LIMITS</div><h1>Turn Ideas Into Visuals</h1><p>Generate images and videos from your imagination. Start free, preview your work and download your creations.</p></section>
+<section class="panel">
+<div class="tabs">
+<button class="tab active" data-mode="text-image">Text → Image</button>
+<button class="tab" data-mode="text-video">Text → Video</button>
+<button class="tab" data-mode="image-video">Image → Video</button>
+<button class="tab" data-mode="image-image">Image → Image</button>
+</div>
+<div id="uploadBox" class="drop" style="display:none" onclick="document.getElementById('upload').click()">📁 Tap to choose an image<br><small>PNG, JPG or WEBP</small><input id="upload" type="file" accept="image/*"></div>
+<textarea id="prompt" placeholder="Describe what you want to create... Example: A cinematic African savannah at sunrise, ultra realistic, dramatic clouds, 4K"></textarea>
+<div class="controls">
+<div class="field"><label>ASPECT RATIO</label><select><option>16:9 Landscape</option><option>9:16 Portrait</option><option>1:1 Square</option></select></div>
+<div class="field"><label>QUALITY</label><select><option>High</option><option>Ultra</option><option>Standard</option></select></div>
+<div class="field"><label>DURATION</label><select><option>5 seconds</option><option>10 seconds</option><option>15 seconds</option></select></div>
+</div>
+<div class="actions"><button class="btn primary" id="generate">✨ Generate</button><button class="btn secondary" id="clear">Clear</button></div>
+<div class="status" id="status">Ready to create.</div>
+<div class="preview" id="preview">Your generated result will appear here.</div>
+</section>
+</main>
+<footer>© 2026 VisionForge AI · Creative tools for everyone</footer>
+</div>
+<script>
+let mode='text-image', selectedImage=null;
+const tabs=document.querySelectorAll('.tab'), uploadBox=document.getElementById('uploadBox'), prompt=document.getElementById('prompt'), preview=document.getElementById('preview'), status=document.getElementById('status');
+tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');mode=t.dataset.mode;uploadBox.style.display=mode.startsWith('image-')?'block':'none';prompt.placeholder=mode==='text-image'?'Describe the image you want to create...':'Describe your video or transformation...';});
+document.getElementById('upload').onchange=e=>{selectedImage=e.target.files[0];if(selectedImage){preview.innerHTML='<b>Image selected:</b> '+selectedImage.name;status.textContent='Image ready.'}};
+document.getElementById('clear').onclick=()=>{prompt.value='';selectedImage=null;preview.textContent='Your generated result will appear here.';status.textContent='Ready to create.'};
+document.getElementById('generate').onclick=()=>{
+ if(!prompt.value.trim() && !selectedImage){status.textContent='Please enter a prompt or choose an image.';return}
+ status.textContent='Preparing your creation...';
+ preview.innerHTML='<div><div style="font-size:42px">⚡</div><b>VisionForge Studio is ready.</b><br><span style="color:#8794aa">AI generation API will be connected in the next setup step.</span></div>';
+ setTimeout(()=>status.textContent='Demo interface complete — connect your preferred AI provider to generate real media.',900);
+};
+</script>
+</body>
+</html>
